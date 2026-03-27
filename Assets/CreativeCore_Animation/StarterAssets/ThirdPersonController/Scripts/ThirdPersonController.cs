@@ -90,6 +90,7 @@ namespace StarterAssets
 		private const float _threshold = 0.01f;
 
 		private bool _hasAnimator;
+		[SerializeField] private Animator anim;
 
 		private void Awake()
 		{
@@ -105,6 +106,7 @@ namespace StarterAssets
 			_hasAnimator = TryGetComponent(out _animator);
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
+			
 
 			AssignAnimationIDs();
 
@@ -314,5 +316,19 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-	}
+        private void OnTriggerEnter(Collider other)
+        {
+			if (other.gameObject.CompareTag("Sun"))
+				{
+				anim.SetTrigger("Sun_Trigger");
+			}
+        }
+		private void OnTriggerExit(Collider other)
+		{
+			if (other.gameObject.CompareTag("Sun"))
+			{
+				anim.SetTrigger("Sun_Trigger");
+			}
+		}
+    }
 }
